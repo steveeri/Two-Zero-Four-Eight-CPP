@@ -1,6 +1,7 @@
 //============================================================================
 // Name        : main.cpp
 // Author      : Steve Richards
+// Created on  : 06/09/18.
 // Version     : 0.1a
 // Copyright   : TBA
 // Description : Executing program to run 2048 console game.
@@ -28,6 +29,7 @@ int main()
 
 	string line;
 	
+	// Listen to user input until we die or quit.
 	while (true) {
 
 		getline(std::cin, line);

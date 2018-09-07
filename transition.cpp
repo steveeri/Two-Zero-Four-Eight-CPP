@@ -1,4 +1,11 @@
-// Created by steve Richards on 06/09/18.
+//============================================================================
+// Name        : transition.cpp
+// Author      : Steve Richards
+// Created on  : 06/09/18.
+// Version     :
+// Copyright   : Your copyright notice
+// Description : 2048 Game Transition object implementation methods
+//============================================================================
 
 #include "transition.h"
 
