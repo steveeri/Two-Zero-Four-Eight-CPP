@@ -4,6 +4,7 @@
 
 ![Screenshot](screenshot-2048.png)
 
+Note compiled version of the app is compiled on Linux (elf binary). It is completely standalone and requires no special libraries.
 
 ## Game Overview
 
