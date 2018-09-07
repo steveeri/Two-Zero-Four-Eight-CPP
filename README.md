@@ -4,8 +4,8 @@
 
 ![Screenshot](screenshot-2048.png)
 
-Note compiled version of the app is compiled on Linux (elf binary). It is completely standalone and requires no special libraries.
-
+Note: the included compiled version of the app (filename = 2048), was compiled on Linux (i.e. elf binary). It is completely standalone and requires no special libraries.
+ 
 ## Game Overview
 
 2048 is a single-player sliding block puzzle game designed by Italian web developer Gabriele Cirulli. 
