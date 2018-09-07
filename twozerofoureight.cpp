@@ -7,7 +7,6 @@
 // Description : 2048 Game engine
 //============================================================================
 
-//Created by steve on 06/09/18.
 
 #include "twozerofoureight.h"
 
