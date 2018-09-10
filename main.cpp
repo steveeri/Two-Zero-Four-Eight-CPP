@@ -20,16 +20,16 @@ using namespace std;
 int main() {
 
 	// define some strings
-	const char* clearScrn = "clear";
- 	const char* prompt = "\n\t*** Let's PLAY!! *** Actions:[ arrows(left, right, up, down), n=new game, q=quit]\n";
-	const char* nilSlideLeft	= " - CAN'T SLIDE OR COMPACT ANY MORE LEFT!";
-	const char* nilSlideRight	= " - CAN'T SLIDE OR COMPACT ANY MORE RIGHT!";
-	const char* nilSlideUp 	= " - CAN'T SLIDE OR COMPACT ANY MORE UP!";
-	const char* nilSlideDown	= " - CAN'T SLIDE OR COMPACT ANY MORE DOWN!";
-	const char* invalidAction	= "invalid action. Please try again!";
-	const char* quitMsg		= "\n\n\t*** Thanks for playing :)  Come again! ***\n\n";
-	const char* youLose		= "\n\t*** GAME OVER -> YOU LOSE. NO MOVES REMAINING. PRESS ENTER FOR NEW GAME: ***\n";
-	const char* youWin			= "\n\t*** YOU DA WINNER  !!!AWESOME!!!  PRESS ENTER FOR NEW GAME: ***\n";
+	const char* clearScrn     = "clear";
+ 	const char* prompt        = "\n\t*** Let's PLAY!! *** Actions:[ arrows(left, right, up, down), n=new game, q=quit]\n";
+	const char* nilSlideLeft  = " - CAN'T SLIDE OR COMPACT ANY MORE LEFT!";
+	const char* nilSlideRight = " - CAN'T SLIDE OR COMPACT ANY MORE RIGHT!";
+	const char* nilSlideUp    = " - CAN'T SLIDE OR COMPACT ANY MORE UP!";
+	const char* nilSlideDown  = " - CAN'T SLIDE OR COMPACT ANY MORE DOWN!";
+	const char* invalidAction = "invalid action. Please try again!";
+	const char* quitMsg       = "\n\n\t*** Thanks for playing :)  Come again! ***\n\n";
+	const char* youLose       = "\n\t*** GAME OVER -> YOU LOSE. NO MOVES REMAINING. PRESS ENTER FOR NEW GAME: ***\n";
+	const char* youWin        = "\n\t*** YOU DA WINNER  !!!AWESOME!!!  PRESS ENTER FOR NEW GAME: ***\n";
 
 	
 	// Create new game engine object and output to fresh screen.
@@ -91,14 +91,14 @@ int main() {
 		string dummyStr;
 		if (!tzfe.hasMovesRemaining()) {
 		 	cout << youLose;
-			getline(std::cin, dummyStr);
+			getline(cin, dummyStr);
 			system(clearScrn);
 			tzfe = TwoZeroFourEight();
 			cout << tzfe.toString() << "\n\n" << endl;
 	 		cout << prompt;			
 		} else if (tzfe.gameWon ()) {
 		 	cout << youWin;
-			getline(std::cin, dummyStr);	
+			getline(cin, dummyStr);	
 			system(clearScrn); 
 			tzfe = TwoZeroFourEight();
 			cout << tzfe.toString() << "\n\n" << endl;
