@@ -2,7 +2,12 @@
 
 ## C++ console version of the 2048 game
 
-![Screenshot](screenshot-2048.png)
+![Screenshot](screenshot1-2048.png)
+![Screenshot](screenshot2-2048.png)
+![Screenshot](screenshot3-2048.png)
+![Screenshot](screenshot4-2048.png)
+![Screenshot](screenshot5-2048.png)
+![Screenshot](screenshot6-2048.png)
 
 Note: the included compiled version of the app (filename = 2048), was compiled on Linux (i.e. elf binary). It is completely standalone and requires no special libraries.
  
