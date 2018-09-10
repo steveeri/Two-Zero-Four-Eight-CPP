@@ -58,12 +58,13 @@ public:
     }
 
     vector<Transition> getTransitions() { return this->transitions; }
-    int getMaxTile() { return this->maxTile; }
+    int getMaxTile() { return this->maxTile; }    
     int getValue(int i) { return (tiles[i]); }
     int getScore() { return score; }
 
     void rePlot();
     bool hasMovesRemaining();
+	bool gameWon() { return this->maxTile >= TARGET; }
     bool actionMove(Moves move);
     string toString();
 };
