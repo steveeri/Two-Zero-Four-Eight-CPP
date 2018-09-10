@@ -39,12 +39,11 @@ int main() {
  
  	// Output prompt and take move input from the user
  	cout << prompt;
-	char input = userInput();
 	
 	// Listen to user input until user quits.
 	while (true) {
 
-		input = userInput();  // get unbuffered user input.	
+		char input = userInput();  // get unbuffered user input.	
 		string action = "\n\tLast action: ";
 		
 		switch (input) {
@@ -91,14 +90,14 @@ int main() {
 		string dummyStr;
 		if (!tzfe.hasMovesRemaining()) {
 		 	cout << youLose;
-			getline(cin, dummyStr);
+			getline(cin, dummyStr); // use getline to force user enter input. Input value ignored.
 			system(clearScrn);
 			tzfe = TwoZeroFourEight();
 			cout << tzfe.toString() << "\n\n" << endl;
 	 		cout << prompt;			
 		} else if (tzfe.gameWon ()) {
 		 	cout << youWin;
-			getline(cin, dummyStr);	
+			getline(cin, dummyStr);	 // use getline to force user enter input. Input value ignored.
 			system(clearScrn); 
 			tzfe = TwoZeroFourEight();
 			cout << tzfe.toString() << "\n\n" << endl;
