@@ -15,9 +15,7 @@
 #include <string>
 
 
-int main() {
-
-using namespace tzfe_engine;
+int main() {  using namespace tzfe_engine;
 
 	// define some strings
 	const char* clearScrn     = "clear";
@@ -109,4 +107,4 @@ using namespace tzfe_engine;
 	 	}
 	}
 	
-}  // end namespace tzfe_engine;
+}
