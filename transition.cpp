@@ -29,5 +29,5 @@ namespace tzfe_engine {
         this->mOldLocation = -1;
     }
 
-}
+}  // end namespace tzfe_engine;
 

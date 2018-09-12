@@ -35,7 +35,7 @@ namespace tzfe_engine {
     private:
         int mScore, mMaxTile, mNumEmpty;   // value to store score and state related details
         int mTiles[GRID_CNT];              // the array to hold the game board values.
-        std::vector<tzfe_engine::Transition>mTransitions; // vector to hold a sequence of transitions
+        std::vector<tzfe_engine::Transition> mTransitions; // vector to hold a sequence of transitions
 
         void createNewTransitions() { mTransitions = std::vector<tzfe_engine::Transition>(); }
         bool addNewTile();
