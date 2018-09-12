@@ -7,17 +7,17 @@
 // Description : Executing program to run 2048 console game.
 //============================================================================
 
-#include "twozerofoureight.h"
-#include "userinput.h"
+#include "twozerofoureight.hpp"
+#include "userinput.hpp"
 
 #include <iostream>
 #include <cstdlib>
 #include <string>
 
-using namespace std;
-
 
 int main() {
+
+using namespace tzfe_engine;
 
 	// define some strings
 	const char* clearScrn     = "clear";
@@ -34,47 +34,47 @@ int main() {
 	
 	// Create new game engine object and output to fresh screen.
     system(clearScrn); 
-	TwoZeroFourEight tzfe = TwoZeroFourEight();
-    cout << tzfe.toString() << "\n\n" << endl;
+	TwoZeroFourEight* pTzfe = new TwoZeroFourEight();
+    std::cout << pTzfe->toString() << "\n\n" << std::endl;
  
  	// Output prompt and take move input from the user
- 	cout << prompt;
+ 	std::cout << prompt;
 	
 	// Listen to user input until user quits.
 	while (true) {
 
-		char input = userInput();  // get unbuffered user input.	
-		string action = "\n\tLast action: ";
+		char input = tzfe_engine::userInput();  // get unbuffered user input.
+		std::string action = "\n\tLast action: ";
 		
 		switch (input) {
 			case 'D':
 				action += "move left";
-				if (!tzfe.actionMove(LEFT)) action += nilSlideLeft;
+				if (!pTzfe->actionMove(LEFT)) action += nilSlideLeft;
 				break;
 			case 'C':
 				action += "move right";
-				if (!tzfe.actionMove(RIGHT)) action += nilSlideRight; 
+				if (!pTzfe->actionMove(RIGHT)) action += nilSlideRight; 
 				break;
 			case 'A':
 				action += "move up";
-				if (!tzfe.actionMove(UP)) action += nilSlideUp;
+				if (!pTzfe->actionMove(UP)) action += nilSlideUp;
 				break;
 			case 'B':
 				action += "move down";
-				if (!tzfe.actionMove(DOWN)) action += nilSlideDown;
+				if (!pTzfe->actionMove(DOWN)) action += nilSlideDown;
 				break;
 			case 'n':
-				tzfe = TwoZeroFourEight();
+				delete pTzfe;
+				pTzfe = new TwoZeroFourEight();
 				action += "start new game";
 				break;
 			case 'q':
 				system(clearScrn); 
-				cout << tzfe.toString() << endl;
+				std::cout << pTzfe->toString() << std::endl;
 				action += "Quit game";
 				action += quitMsg;
-				cout << action;
+				std::cout << action;
 				return 0;  // Exit the game program here.
-				break;
 			default:
 				action += invalidAction;
 				break;
@@ -82,30 +82,31 @@ int main() {
 
 		// Clear screen and output updated game board resulting from last input action.
 		system(clearScrn);
-		cout << tzfe.toString() << endl;
-		cout << action << endl;
+		std::cout << pTzfe->toString() << std::endl;
+		std::cout << action << std::endl;
 
 		// Check the result of the last move request: 
 		// ??? Has the user Lost or Won the game yet ???
-		string dummyStr;
-		if (!tzfe.hasMovesRemaining()) {
-		 	cout << youLose;
-			getline(cin, dummyStr); // use getline to force user enter input. Input value ignored.
+		std::string dummyStr;
+		if (!pTzfe->hasMovesRemaining()) {
+		 	std::cout << youLose;
+			getline(std::cin, dummyStr); // use getline to force user enter input. Input value ignored.
 			system(clearScrn);
-			tzfe = TwoZeroFourEight();
-			cout << tzfe.toString() << "\n\n" << endl;
-	 		cout << prompt;			
-		} else if (tzfe.gameWon ()) {
-		 	cout << youWin;
-			getline(cin, dummyStr);	 // use getline to force user enter input. Input value ignored.
-			system(clearScrn); 
-			tzfe = TwoZeroFourEight();
-			cout << tzfe.toString() << "\n\n" << endl;
-	 		cout << prompt;	
+			delete pTzfe;
+			pTzfe = new TwoZeroFourEight();
+			std::cout << pTzfe->toString() << "\n\n" << std::endl;
+	 		std::cout << prompt;			
+		} else if (pTzfe->gameWon()) {
+		 	std::cout << youWin;
+			getline(std::cin, dummyStr);	 // use getline to force user enter input. Input value ignored.
+			system(clearScrn);
+			delete pTzfe;
+			pTzfe = new TwoZeroFourEight();
+			std::cout << pTzfe->toString() << "\n\n" << std::endl;
+	 		std::cout << prompt;
 		} else {
-	 		cout << prompt;
+	 		std::cout << prompt;
 	 	}
 	}
 	
-    return 0;
-}
+}  // end namespace tzfe_engine;

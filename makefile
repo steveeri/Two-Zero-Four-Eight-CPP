@@ -1,7 +1,7 @@
 # Makfile for 2048 console game written in C++ v11
 MYPROG=2048
-OBJS=transition.o twozerofoureight.o userinput.o main.o 	
-HDRS=transition.h twozerofoureight.h userinput.h
+OBJS=transition.o userinput.o twozerofoureight.o main.o 	
+HDRS=transition.hpp userinput.hpp twozerofoureight.hpp 
 
 COMP=gcc
 COMPFLAGS=-c -std=c++11 -Wall -Werror
@@ -17,8 +17,13 @@ game: all
 all: $(MYPROG)
 
 # link and build executable binary
-$(MYPROG): $(OBJS)
+link: $(MYPROG)
+
+$(MYPROG): compile
 	$(LINKER) $(OBJS) -o $(MYPROG)
+
+# make everything
+compile: $(OBJS)
 
 # compile programs
 %.o: %.cpp $(HDRS)

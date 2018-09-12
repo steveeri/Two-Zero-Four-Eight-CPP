@@ -4,17 +4,17 @@
 // Created on  : 06/09/18.
 // Version     :
 // Copyright   : Your copyright notice
-// Description : 2048 Game engine
+// Description : 2048 Game engine implementation files
 //============================================================================
 
 
-#include "twozerofoureight.h"
+#include "twozerofoureight.hpp"
 
 #include <cstdlib>
 #include <iostream>
 
-using namespace std;
 
+namespace tzfe_engine {
 
 //
 // Below are the implementation methods for the TwoZeroFourEight game class.
@@ -23,33 +23,31 @@ using namespace std;
 //
 
 void TwoZeroFourEight::rePlot() {
-    this->createNewTransitions();
+    createNewTransitions();
     for (int i = 0; i < GRID_CNT; i++) {
-        this->transitions.push_back(Transition(REFRESH, tiles[i], i));
+        mTransitions.push_back(Transition(REFRESH, mTiles[i], i));
     }
 }
 
 //private method
 bool TwoZeroFourEight::addNewTile() {
-    if (numEmpty == 0) return false;
+    if (mNumEmpty == 0) return false;
 
     // Initialise random number generator
-    time_t t; srand((unsigned) time(&t)+ maxTile + score);
+    time_t t; srand((unsigned) time(&t)+ mMaxTile + mScore);
 
     int val = ((rand() % 2) + 1) * 2;
-    int pos = rand() % numEmpty;
+    int pos = rand() % mNumEmpty;
     int numBlanksFound = 0;
 
     for (int i = 0; i < GRID_CNT; i++) {
-        if (tiles[i] == BLANK) {
+        if (mTiles[i] == BLANK) {
             if (numBlanksFound == pos) {
-                tiles[i] = val;
-                if (val > maxTile) maxTile = val;
-                if (&transitions != nullptr) {
-                    this->transitions.push_back(Transition(ADD, val, i));
-                    this->numEmpty--;
-                    return true;
-                }
+                mTiles[i] = val;
+                if (val > mMaxTile) mMaxTile = val;
+                mTransitions.push_back(Transition(ADD, val, i));
+                mNumEmpty--;
+                return true;
             }
             numBlanksFound++;
         }
@@ -66,16 +64,16 @@ bool TwoZeroFourEight::slideTileRowOrColumn(int index1, int index2, int index3, 
     // Do we have some sliding to do, or not?
     int es = 0;  // empty spot index
     for (int j = 1; j < GRID_SIZE; j++) {
-        if (tiles[tmpArr[es]] != BLANK) {
+        if (mTiles[tmpArr[es]] != BLANK) {
             es++;
-        } else if (tiles[tmpArr[j]] == BLANK) {
+        } else if (mTiles[tmpArr[j]] == BLANK) {
             continue;
         } else {
             // Otherwise we have a slide condition
-            tiles[tmpArr[es]] = tiles[tmpArr[j]];
-            tiles[tmpArr[j]] = BLANK;
-            transitions.push_back(Transition(SLIDE, tiles[tmpArr[es]], tmpArr[es], tmpArr[j]));
-            transitions.push_back(Transition(CLEAR, BLANK, tmpArr[j]));
+            mTiles[tmpArr[es]] = mTiles[tmpArr[j]];
+            mTiles[tmpArr[j]] = BLANK;
+            mTransitions.push_back(Transition(SLIDE, mTiles[tmpArr[es]], tmpArr[es], tmpArr[j]));
+            mTransitions.push_back(Transition(CLEAR, BLANK, tmpArr[j]));
             moved = true;
             es++;
         }
@@ -91,18 +89,16 @@ bool TwoZeroFourEight::compactTileRowOrColumn(int index1, int index2, int index3
 
     for (int j = 0; j < (GRID_SIZE-1); j++) {
 
-        if (tiles[tmpArr[j]] != BLANK && tiles[tmpArr[j]] == tiles[tmpArr[j+1]]) { // we found a matching pair
-            int ctv = tiles[tmpArr[j]] * 2;   // = compacted tile value
-            tiles[tmpArr[j]] = ctv;
-            tiles[tmpArr[j+1]] = BLANK;
-            score += ctv;
-            if (ctv > maxTile) { maxTile = ctv; }  // is this the biggest tile # so far
-            if (&transitions != nullptr) {
-                transitions.push_back(Transition(COMPACT, ctv, tmpArr[j], tmpArr[j+1]));
-                transitions.push_back(Transition(CLEAR, BLANK, tmpArr[j+1]));
-            }
+        if (mTiles[tmpArr[j]] != BLANK && mTiles[tmpArr[j]] == mTiles[tmpArr[j+1]]) { // we found a matching pair
+            int ctv = mTiles[tmpArr[j]] * 2;   // = compacted tile value
+            mTiles[tmpArr[j]] = ctv;
+            mTiles[tmpArr[j+1]] = BLANK;
+            mScore += ctv;
+            if (ctv > mMaxTile) { mMaxTile = ctv; }  // is this the biggest tile # so far
+            mTransitions.push_back(Transition(COMPACT, ctv, tmpArr[j], tmpArr[j+1]));
+            mTransitions.push_back(Transition(CLEAR, BLANK, tmpArr[j+1]));
             compacted = true;
-            numEmpty++;
+            mNumEmpty++;
         }
     }
     return compacted;
@@ -215,19 +211,19 @@ bool TwoZeroFourEight::actionMoveDown() {
 // Public method to Check if there are any moves remaining.
 bool TwoZeroFourEight::hasMovesRemaining() {
 
-    if (numEmpty > 0) return true;
+    if (mNumEmpty > 0) return true;
 
     // check left-right for compact moves remaining.
     int arrLimit = GRID_CNT - COL_CNT;
     for (int i = 0; i < arrLimit; i++) {
-        if (tiles[i] == tiles[i + COL_CNT]) return true;
+        if (mTiles[i] == mTiles[i + COL_CNT]) return true;
     }
 
     // check up-down for compact moves remaining.
     arrLimit = GRID_CNT - 1;
     for (int i = 0; i < arrLimit; i++) {
         if ((i + 1) % ROW_CNT > 0) {
-            if (tiles[i] == tiles[i + 1]) return true;
+            if (mTiles[i] == mTiles[i + 1]) return true;
         }
     }
     return false;
@@ -256,13 +252,13 @@ bool TwoZeroFourEight::actionMove(Moves move) {
 }
 
 // Output a text representation of the current state of the game board.
-string TwoZeroFourEight::toString() {
+std::string TwoZeroFourEight::toString() {
 
-    string strVals[GRID_CNT];
+    std::string strVals[GRID_CNT];
 
     for (int i = 0; i < GRID_CNT; i++) {
 
-    	string tmpStr = to_string(tiles[i]);
+    	std::string tmpStr = std::to_string(mTiles[i]);
     	int strLen = tmpStr.length();
     	switch (strLen) {
     	case 1:
@@ -283,9 +279,9 @@ string TwoZeroFourEight::toString() {
     }
 
     // Compile the output data.
-    string str = "\n         [[[ 2048 ]]]\n\n";
-    str += "\n           Score: " + to_string(this->score);
-    str += "\n        Max Tile: " + to_string(this->maxTile);
+    std::string str = "\n         [[[ 2048 ]]]\n\n";
+    str += "\n           Score: " + std::to_string(mScore);
+    str += "\n        Max Tile: " + std::to_string(mMaxTile);
     str += "\n       ---------------------\n";
     str += "       " + strVals[0] + strVals[4] + strVals[8] + strVals[12];
     str += "       " + strVals[1] + strVals[5] + strVals[9] + strVals[13];
@@ -295,3 +291,4 @@ string TwoZeroFourEight::toString() {
     return str;
 }
 
+}

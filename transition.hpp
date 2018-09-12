@@ -1,15 +1,21 @@
+#ifndef TZFE_GAME_TRANSITION_HPP_
+#define TZFE_GAME_TRANSITION_HPP_
+
 //============================================================================
-// Name        : transition.cpp
+// Name        : transition.hpp
 // Author      : Steve Richards
 // Created on  : 06/09/18.
 // Version     :
 // Copyright   : Your copyright notice
-// Description : 2048 Game Transition object implementation.
+// Description : 2048 Game Transition object definitions
 //============================================================================
 
-#include "transition.hpp"
-
 namespace tzfe_engine {
+
+    /*
+    * The below enumeration define allowed transition action types.
+    */
+    enum actions {ADD, CLEAR, SLIDE, COMPACT, REFRESH};
 
     /*
     * Transition effectively holds an instruction for a movement of tiles on the 2048 game board.
@@ -20,14 +26,14 @@ namespace tzfe_engine {
     * Holding a collection "of collections of moves" can also be held to allow the game board to
     * be restored to a previous state allowing - hence undo actions can be achieved;
     */
-    Transition::Transition(const actions action, int val, int newLocation, int oldLocation)
-        : mType(action), mVal(val), mNewLocation(newLocation), mOldLocation(oldLocation) {
-    }
+    class Transition {
+    public:
+        actions mType;
+        int mVal, mNewLocation, mOldLocation;
+        Transition(const actions action, int val, int newLocation, int oldLocation);
+        Transition(actions action, int val, int newLocation);
+    };
 
-    Transition::Transition(actions action, int val, int newLocation)
-        : mType(action), mVal(val), mNewLocation(newLocation) {
-        this->mOldLocation = -1;
-    }
+}  // end namespace tzfe_engine;
 
-}
-
+#endif  // TZFE_GAME_TRANSITION_HPP_
